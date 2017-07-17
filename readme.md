@@ -1,0 +1,1 @@
+This repository is meant to serve as a test for my experimentation with AWS & the Serverless framework.
