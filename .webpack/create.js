@@ -60,14 +60,113 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: Error: Couldn't find preset \"es-2015\" relative to directory \"/Users/Mikha-el/mbd/serverlessblog\"\n    at /Users/Mikha-el/mbd/serverlessblog/node_modules/babel-core/lib/transformation/file/options/option-manager.js:293:19\n    at Array.map (native)\n    at OptionManager.resolvePresets (/Users/Mikha-el/mbd/serverlessblog/node_modules/babel-core/lib/transformation/file/options/option-manager.js:275:20)\n    at OptionManager.mergePresets (/Users/Mikha-el/mbd/serverlessblog/node_modules/babel-core/lib/transformation/file/options/option-manager.js:264:10)\n    at OptionManager.mergeOptions (/Users/Mikha-el/mbd/serverlessblog/node_modules/babel-core/lib/transformation/file/options/option-manager.js:249:14)\n    at OptionManager.init (/Users/Mikha-el/mbd/serverlessblog/node_modules/babel-core/lib/transformation/file/options/option-manager.js:368:12)\n    at File.initOptions (/Users/Mikha-el/mbd/serverlessblog/node_modules/babel-core/lib/transformation/file/index.js:212:65)\n    at new File (/Users/Mikha-el/mbd/serverlessblog/node_modules/babel-core/lib/transformation/file/index.js:135:24)\n    at Pipeline.transform (/Users/Mikha-el/mbd/serverlessblog/node_modules/babel-core/lib/transformation/pipeline.js:46:16)\n    at transpile (/Users/Mikha-el/mbd/serverlessblog/node_modules/babel-loader/lib/index.js:49:20)\n    at Object.module.exports (/Users/Mikha-el/mbd/serverlessblog/node_modules/babel-loader/lib/index.js:174:20)");
+module.exports = require("babel-runtime/core-js/json/stringify");
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _stringify = __webpack_require__(0);
+
+var _stringify2 = _interopRequireDefault(_stringify);
+
+exports.main = main;
+
+var _uuid = __webpack_require__(2);
+
+var _uuid2 = _interopRequireDefault(_uuid);
+
+var _awsSdk = __webpack_require__(3);
+
+var _awsSdk2 = _interopRequireDefault(_awsSdk);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var credentials = new _awsSdk2.default.SharedIniFileCredentials({ profile: 'default' });
+_awsSdk2.default.config.credentials = credentials;
+
+_awsSdk2.default.config.update({ region: 'us-east-2' });
+var dynamoDb = new _awsSdk2.default.DynamoDB.DocumentClient();
+
+function main(event, context, callback) {
+	//Request body is passed in as a JSON encoded string in event.body
+	var data = JSON.parse(event.body);
+
+	/*
+ // 'Item' contains the attributes of the item to be created
+     // - 'userId': user identities are federated through the
+     //             Cognito Identity Pool, we will use the identity id
+     //             as the user id of the authenticated user
+     // - 'noteId': a unique uuid
+     // - 'content': parsed from request body
+     // - 'attachment': parsed from request body
+     // - 'createdAt': current Unix timestamp
+ */
+
+	var params = {
+		TableName: 'notes',
+		Item: {
+			userId: event.requestContext.identity.cognitoIdentityId,
+			noteId: _uuid2.default.v1(),
+			content: data.content,
+			attachment: data.attachment,
+			createdAt: new Date().getTime()
+		}
+	};
+
+	dynamoDb.put(params, function (error, data) {
+		//Set response headers to enable CORS
+		var headers = {
+			'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Credentials': true
+		};
+
+		//Return status code 500 on error
+		if (error) {
+			var _response = {
+				statusCode: 500,
+				headers: headers,
+				body: (0, _stringify2.default)({ status: false })
+			};
+			callback(null, _response);
+			return;
+		}
+
+		//Return Status Code 200 and the newly created item
+		var response = {
+			statusCode: 200,
+			headers: headers,
+			body: (0, _stringify2.default)(params.Item)
+		};
+		callback(null, reponse);
+	});
+};
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+module.exports = require("uuid");
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+module.exports = require("aws-sdk");
 
 /***/ })
 /******/ ])));

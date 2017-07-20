@@ -2,7 +2,7 @@ var glob = require('glob');
 var path = require('path');
 var nodeExternals = require('webpack-node-externals');
 
-// Required for Create React App Babel transform
+// Production may be Required for Create React App Babel transform
 process.env.NODE_ENV = 'production';
 
 module.exports = {
@@ -20,6 +20,9 @@ module.exports = {
 			loader: 'babel-loader',
 			include: __dirname,
 			exclude: /node_modules/,
+			query: {
+				presets: ['es2015']
+			}
 		}]
 	},
 	//Creating multiple API's in this guide, and we are going

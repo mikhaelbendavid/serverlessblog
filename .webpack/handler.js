@@ -60,15 +60,45 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ([
-/* 0 */,
-/* 1 */
+/* 0 */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: Error: Couldn't find preset \"es-2015\" relative to directory \"/Users/Mikha-el/mbd/serverlessblog\"\n    at /Users/Mikha-el/mbd/serverlessblog/node_modules/babel-core/lib/transformation/file/options/option-manager.js:293:19\n    at Array.map (native)\n    at OptionManager.resolvePresets (/Users/Mikha-el/mbd/serverlessblog/node_modules/babel-core/lib/transformation/file/options/option-manager.js:275:20)\n    at OptionManager.mergePresets (/Users/Mikha-el/mbd/serverlessblog/node_modules/babel-core/lib/transformation/file/options/option-manager.js:264:10)\n    at OptionManager.mergeOptions (/Users/Mikha-el/mbd/serverlessblog/node_modules/babel-core/lib/transformation/file/options/option-manager.js:249:14)\n    at OptionManager.init (/Users/Mikha-el/mbd/serverlessblog/node_modules/babel-core/lib/transformation/file/options/option-manager.js:368:12)\n    at File.initOptions (/Users/Mikha-el/mbd/serverlessblog/node_modules/babel-core/lib/transformation/file/index.js:212:65)\n    at new File (/Users/Mikha-el/mbd/serverlessblog/node_modules/babel-core/lib/transformation/file/index.js:135:24)\n    at Pipeline.transform (/Users/Mikha-el/mbd/serverlessblog/node_modules/babel-core/lib/transformation/pipeline.js:46:16)\n    at transpile (/Users/Mikha-el/mbd/serverlessblog/node_modules/babel-loader/lib/index.js:49:20)\n    at Object.module.exports (/Users/Mikha-el/mbd/serverlessblog/node_modules/babel-loader/lib/index.js:174:20)");
+module.exports = require("babel-runtime/core-js/json/stringify");
+
+/***/ }),
+/* 1 */,
+/* 2 */,
+/* 3 */,
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _stringify = __webpack_require__(0);
+
+var _stringify2 = _interopRequireDefault(_stringify);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+module.exports.hello = function (event, context, callback) {
+  var response = {
+    statusCode: 200,
+    body: (0, _stringify2.default)({
+      message: 'Go Serverless v1.0! Your function executed successfully! This is the message to let you know you\'ve updated your message!',
+      input: event
+    })
+  };
+
+  callback(null, response);
+
+  // Use this code if you don't use the http event with the LAMBDA-PROXY integration
+  // callback(null, { message: 'Go Serverless v1.0! Your function executed successfully!', event });
+};
 
 /***/ })
 /******/ ])));
