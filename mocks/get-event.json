@@ -1,0 +1,10 @@
+{
+  "pathParameters": {
+    "id": "6ae725c0-6e4d-11e7-87ce-230749f10f8d"
+  },
+  "requestContext": {
+    "identity": {
+      "cognitoIdentityId": "mlitchev@protonmail.ch"
+    }
+  }
+}

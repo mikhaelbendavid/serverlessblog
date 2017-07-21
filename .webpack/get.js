@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 8);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -153,7 +153,9 @@ function buildResponse(statusCode, body) {
 }
 
 /***/ }),
-/* 6 */
+/* 6 */,
+/* 7 */,
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -174,47 +176,46 @@ var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
 var main = exports.main = function () {
 	var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(event, context, callback) {
-		var data, params, result;
+		var params, result;
 		return _regenerator2.default.wrap(function _callee$(_context) {
 			while (1) {
 				switch (_context.prev = _context.next) {
 					case 0:
-						//Request body is passed in as a JSON encoded string in event.body
-						data = JSON.parse(event.body);
 						params = {
 							TableName: 'notes',
-							Item: {
+							Key: {
 								userid: event.requestContext.identity.cognitoIdentityId,
-								notesid: _uuid2.default.v1(),
-								content: data.content,
-								attachment: data.attachment,
-								createdAt: new Date().getTime()
+								notesid: event.pathParameters.id
 							}
 						};
-						_context.prev = 2;
-						_context.next = 5;
-						return dynamoDbLib.call('put', params);
+						_context.prev = 1;
+						_context.next = 4;
+						return dynamoDbLib.call('get', params);
 
-					case 5:
+					case 4:
 						result = _context.sent;
 
-						callback(null, (0, _responseLib.success)(params.Item));
-						_context.next = 13;
+						if (result.Item) {
+							//Return the retrieved item
+							callback(null, (0, _responseLib.success)(result.Item));
+						} else {
+							callback(null, (0, _responseLib.failure)({ status: false, error: 'Item not found' }));
+						}
+						_context.next = 11;
 						break;
 
-					case 9:
-						_context.prev = 9;
-						_context.t0 = _context['catch'](2);
+					case 8:
+						_context.prev = 8;
+						_context.t0 = _context['catch'](1);
 
-						console.log(_context.t0);
 						callback(null, (0, _responseLib.failure)({ status: false }));
 
-					case 13:
+					case 11:
 					case 'end':
 						return _context.stop();
 				}
 			}
-		}, _callee, this, [[2, 9]]);
+		}, _callee, this, [[1, 8]]);
 	}));
 
 	return function main(_x, _x2, _x3) {
@@ -222,44 +223,17 @@ var main = exports.main = function () {
 	};
 }();
 
-var _uuid = __webpack_require__(7);
-
-var _uuid2 = _interopRequireDefault(_uuid);
-
 var _dynamodbLib = __webpack_require__(4);
 
 var dynamoDbLib = _interopRequireWildcard(_dynamodbLib);
 
 var _responseLib = __webpack_require__(5);
 
-var _awsSdk = __webpack_require__(1);
-
-var _awsSdk2 = _interopRequireDefault(_awsSdk);
-
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_awsSdk2.default.config.update({ region: 'us-east-2' });
-
 ;
-
-/*
-// 'Item' contains the attributes of the item to be created
-    // - 'userId': user identities are federated through the
-    //             Cognito Identity Pool, we will use the identity id
-    //             as the user id of the authenticated user
-    // - 'noteId': a unique uuid
-    // - 'content': parsed from request body
-    // - 'attachment': parsed from request body
-    // - 'createdAt': current Unix timestamp
-*/
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports) {
-
-module.exports = require("uuid");
 
 /***/ })
 /******/ ])));
