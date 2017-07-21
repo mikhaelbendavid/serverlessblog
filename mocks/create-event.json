@@ -1,5 +1,5 @@
 {
-  "body": "{\"content\":\"hello world\",\"attachment\":\"hello.jpg\"}",
+  "body": "{\"content\":\"another one\",\"attachment\":\"djkhaled.jpg\"}",
   "requestContext": {
     "identity": {
       "cognitoIdentityId": "mlitchev@protonmail.ch"
