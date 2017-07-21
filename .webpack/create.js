@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -71,6 +71,159 @@ module.exports = require("babel-runtime/core-js/json/stringify");
 
 /***/ }),
 /* 1 */
+/***/ (function(module, exports) {
+
+module.exports = require("aws-sdk");
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.main = undefined;
+
+var _regenerator = __webpack_require__(3);
+
+var _regenerator2 = _interopRequireDefault(_regenerator);
+
+var _asyncToGenerator2 = __webpack_require__(4);
+
+var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
+
+var main = exports.main = function () {
+	var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(event, context, callback) {
+		var data, params, result;
+		return _regenerator2.default.wrap(function _callee$(_context) {
+			while (1) {
+				switch (_context.prev = _context.next) {
+					case 0:
+						//Request body is passed in as a JSON encoded string in event.body
+						data = JSON.parse(event.body);
+						params = {
+							TableName: 'notes',
+							Item: {
+								userId: event.requestContext.identity.cognitoIdentityId,
+								noteId: _uuid2.default.v1(),
+								content: data.content,
+								attachment: data.attachment,
+								createdAt: new Date().getTime()
+							}
+						};
+						_context.prev = 2;
+						_context.next = 5;
+						return dynamoDbLib.call('put', params);
+
+					case 5:
+						result = _context.sent;
+
+						callback(null, (0, _responseLib.success)(params.Item));
+						_context.next = 13;
+						break;
+
+					case 9:
+						_context.prev = 9;
+						_context.t0 = _context['catch'](2);
+
+						console.log(_context.t0);
+						callback(null, (0, _responseLib.failure)({ status: false }));
+
+					case 13:
+					case 'end':
+						return _context.stop();
+				}
+			}
+		}, _callee, this, [[2, 9]]);
+	}));
+
+	return function main(_x, _x2, _x3) {
+		return _ref.apply(this, arguments);
+	};
+}();
+
+var _uuid = __webpack_require__(5);
+
+var _uuid2 = _interopRequireDefault(_uuid);
+
+var _dynamodbLib = __webpack_require__(6);
+
+var dynamoDbLib = _interopRequireWildcard(_dynamodbLib);
+
+var _responseLib = __webpack_require__(7);
+
+var _awsSdk = __webpack_require__(1);
+
+var _awsSdk2 = _interopRequireDefault(_awsSdk);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_awsSdk2.default.config.update({ region: 'us-east-2' });
+
+;
+
+/*
+// 'Item' contains the attributes of the item to be created
+    // - 'userId': user identities are federated through the
+    //             Cognito Identity Pool, we will use the identity id
+    //             as the user id of the authenticated user
+    // - 'noteId': a unique uuid
+    // - 'content': parsed from request body
+    // - 'attachment': parsed from request body
+    // - 'createdAt': current Unix timestamp
+*/
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+module.exports = require("babel-runtime/regenerator");
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+module.exports = require("babel-runtime/helpers/asyncToGenerator");
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+module.exports = require("uuid");
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.call = call;
+
+var _awsSdk = __webpack_require__(1);
+
+var _awsSdk2 = _interopRequireDefault(_awsSdk);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_awsSdk2.default.config.update({ region: 'us-east-2' });
+
+function call(action, params) {
+	var dynamoDb = new _awsSdk2.default.DynamoDB.DocumentClient();
+
+	return dynamoDb[action](params).promise();
+}
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -84,86 +237,29 @@ var _stringify = __webpack_require__(0);
 
 var _stringify2 = _interopRequireDefault(_stringify);
 
-exports.main = main;
-
-var _uuid = __webpack_require__(2);
-
-var _uuid2 = _interopRequireDefault(_uuid);
-
-var _awsSdk = __webpack_require__(3);
-
-var _awsSdk2 = _interopRequireDefault(_awsSdk);
+exports.success = success;
+exports.failure = failure;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_awsSdk2.default.config.update({ region: 'us-east-2' });
-var dynamoDb = new _awsSdk2.default.DynamoDB.DocumentClient();
+function success(body) {
+	return buildResponse(200, body);
+}
 
-function main(event, context, callback) {
-	//Request body is passed in as a JSON encoded string in event.body
-	var data = JSON.parse(event.body);
+function failure(body) {
+	return buildResponse(500, body);
+}
 
-	/*
- // 'Item' contains the attributes of the item to be created
-     // - 'userId': user identities are federated through the
-     //             Cognito Identity Pool, we will use the identity id
-     //             as the user id of the authenticated user
-     // - 'noteId': a unique uuid
-     // - 'content': parsed from request body
-     // - 'attachment': parsed from request body
-     // - 'createdAt': current Unix timestamp
- */
-
-	var params = {
-		TableName: 'notes',
-		Item: {
-			userId: event.requestContext.identity.cognitoIdentityId,
-			noteId: _uuid2.default.v1(),
-			content: data.content,
-			attachment: data.attachment,
-			createdAt: new Date().getTime()
-		}
-	};
-
-	dynamoDb.put(params, function (error, data) {
-		//Set response headers to enable CORS
-		var headers = {
+function buildResponse(statusCode, body) {
+	return {
+		statusCode: statusCode,
+		headers: {
 			'Access-Control-Allow-Origin': '*',
 			'Access-Control-Allow-Credentials': true
-		};
-
-		//Return status code 500 on error
-		if (error) {
-			var _response = {
-				statusCode: 500,
-				headers: headers,
-				body: (0, _stringify2.default)({ status: false })
-			};
-			callback(null, _response);
-			return;
-		}
-
-		//Return Status Code 200 and the newly created item
-		var response = {
-			statusCode: 200,
-			headers: headers,
-			body: (0, _stringify2.default)(params.Item)
-		};
-		callback(null, reponse);
-	});
-};
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
-module.exports = require("uuid");
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
-module.exports = require("aws-sdk");
+		},
+		body: (0, _stringify2.default)(body)
+	};
+}
 
 /***/ })
 /******/ ])));
