@@ -1,9 +1,6 @@
 import uuid from 'uuid';
 import AWS from 'aws-sdk';
 
-const credentials = new AWS.SharedIniFileCredentials({profile: 'default'});
-AWS.config.credentials = credentials;
-
 AWS.config.update({region:'us-east-2'});
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
@@ -30,7 +27,7 @@ export function main(event, context, callback) {
 			noteId: uuid.v1(),
 			content: data.content,
 			attachment: data.attachment,
-			createdAt: new Date().getTime()
+			createdAt: new Date().getTime(),
 		}
 	};
 
@@ -61,4 +58,5 @@ export function main(event, context, callback) {
 	callback(null, reponse);
 
 	});
+
 };

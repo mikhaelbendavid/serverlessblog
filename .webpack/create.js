@@ -96,9 +96,6 @@ var _awsSdk2 = _interopRequireDefault(_awsSdk);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var credentials = new _awsSdk2.default.SharedIniFileCredentials({ profile: 'default' });
-_awsSdk2.default.config.credentials = credentials;
-
 _awsSdk2.default.config.update({ region: 'us-east-2' });
 var dynamoDb = new _awsSdk2.default.DynamoDB.DocumentClient();
 
