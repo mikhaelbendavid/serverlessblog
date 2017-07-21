@@ -107,8 +107,8 @@ var main = exports.main = function () {
 						params = {
 							TableName: 'notes',
 							Item: {
-								userId: event.requestContext.identity.cognitoIdentityId,
-								noteId: _uuid2.default.v1(),
+								userid: event.requestContext.identity.cognitoIdentityId,
+								notesid: _uuid2.default.v1(),
 								content: data.content,
 								attachment: data.attachment,
 								createdAt: new Date().getTime()

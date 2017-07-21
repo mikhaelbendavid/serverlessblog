@@ -11,8 +11,8 @@ export async function main(event, context, callback) {
 	const params = {
 		TableName: 'notes',
 		Item: {
-			userId: event.requestContext.identity.cognitoIdentityId,
-			noteId: uuid.v1(),
+			userid: event.requestContext.identity.cognitoIdentityId,
+			notesid: uuid.v1(),
 			content: data.content,
 			attachment: data.attachment,
 			createdAt: new Date().getTime(),
