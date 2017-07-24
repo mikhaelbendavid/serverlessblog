@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
-import '../config.js';
+import config from '../config.js';
 import { CognitoUserPool, AuthenticationDetails, CognitoUser } from 'amazon-cognito-identity-js';
 import './Login.css';
 
@@ -30,7 +30,7 @@ class Login extends Component {
 
     try {
       const userToken = await this.login(this.state.username, this.state.password);
-      alert(userToken);
+      this.props.updateUserToken(userToken);;
     }
     catch(e) {
       alert(e);
