@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import LoaderButton from '../components/LoaderButton';
 import config from '../config.js';
+import { invokeApig } from '../libs/awsLib';
 import './NewNote.css';
 
 class NewNote extends Component {
@@ -32,15 +33,36 @@ class NewNote extends Component {
   }
 
   handleSubmit = async (event) => {
-    event.preventDefault();
+  event.preventDefault();
 
-    if (this.file && this.file.size > config.MAX_ATTACHMENT_SIZE) {
-      alert('Please pick a file smaller than 5MB');
-      return;
-    }
-
-    this.setState({ isLoading: true });
+  if (this.file && this.file.size > config.MAX_ATTACHMENT_SIZE) {
+    alert('Please pick a file smaller than 5MB');
+    return;
   }
+
+  this.setState({ isLoading: true });
+
+  try {
+    await this.createNote({
+      content: this.state.content,
+    });
+    this.props.history.push('/');
+  }
+  catch(e) {
+    console.log(e);
+    alert(e);
+    this.setState({ isLoading: false });
+  }
+
+}
+
+createNote(note) {
+  return invokeApig({
+    path: '/notes',
+    method: 'POST',
+    body: note,
+  }, this.props.userToken);
+}
 
   render() {
     return (
