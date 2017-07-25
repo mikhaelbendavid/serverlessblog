@@ -33,7 +33,7 @@ functions:
   # - path: rul path is /notes
   # - method: POST request
   # - cors: enabled CORS for browser cross domain API calls
-  # - authorizer: authenticate using the AWS IAM role 
+  # - authorizer: authenticate using the AWS IAM role
   create:
     handler: create.main
     events:
@@ -69,7 +69,7 @@ functions:
      events:
        - http:
           path: notes/{id}
-          method: put 
+          method: put
           cors: true
           authorizer: aws_iam
 

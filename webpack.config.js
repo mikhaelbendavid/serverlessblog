@@ -19,7 +19,7 @@ module.exports = {
 // eslint-disable-next-line
 			test: /\.js$/,
 // eslint-disable-next-line
-			loader: {'babel-loader', 'json-loader'}
+			loader: 'babel-loader',
 			include: __dirname,
 			exclude: /node_modules/,
 			query: {
