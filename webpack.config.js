@@ -7,7 +7,7 @@ process.env.NODE_ENV = 'production';
 
 module.exports = {
 	//Use all JS files in project root (except webpack config)
-	//as an entry 
+	//as an entry
 	entry: globEntries('!(webpack.config).js'),
 	target: 'node',
 	//Since aws-sdk is not compatible with webpack,
@@ -16,8 +16,10 @@ module.exports = {
 	//Run babel on all .js files and skip node modules
 	module: {
 		rules: [{
+// eslint-disable-next-line
 			test: /\.js$/,
-			loader: 'babel-loader',
+// eslint-disable-next-line
+			loader: {'babel-loader', 'json-loader'}
 			include: __dirname,
 			exclude: /node_modules/,
 			query: {
@@ -45,10 +47,3 @@ function globEntries(globPath) {
 
 	return entries;
 }
-
-
-
-
-
-
-

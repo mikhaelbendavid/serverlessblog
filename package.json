@@ -32,7 +32,9 @@
   },
   "dependencies": {
     "amazon-cognito-identity-js": "^1.19.0",
+    "aws-sdk": "^2.89.0",
     "babel-runtime": "^6.23.0",
+    "crypto-js": "^3.1.9-1",
     "react-bootstrap": "^0.31.1",
     "react-router-dom": "^4.1.2",
     "serverless": "^1.18.0",
