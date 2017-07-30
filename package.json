@@ -26,7 +26,7 @@
     "babel-preset-stage-3": "^6.24.1",
     "glob": "^7.1.2",
     "react-app": "^1.1.2",
-    "serverless-webpack": "^2.0.0",
+    "serverless-webpack": "^2.2.0",
     "webpack": "^3.3.0",
     "webpack-node-externals": "^1.6.0"
   },
@@ -37,7 +37,7 @@
     "crypto-js": "^3.1.9-1",
     "react-bootstrap": "^0.31.1",
     "react-router-dom": "^4.1.2",
-    "serverless": "^1.18.0",
+    "serverless": "^1.18.1",
     "uuid": "^3.1.0"
   }
 }
