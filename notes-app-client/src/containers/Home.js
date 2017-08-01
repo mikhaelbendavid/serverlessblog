@@ -52,7 +52,7 @@ class Home extends Component {
             key="new"
             href="/notes/new"
             onClick={this.handleNoteClick}>
-              <h4><b>{'\uFF0B'}</b> Create a new note</h4>
+              <h4><b>{'\uFF0B'}</b> Create a New Job</h4>
           </ListGroupItem> )
   ));
 }
@@ -66,8 +66,8 @@ class Home extends Component {
 	renderLander() {
 		return (
 			<div className="lander">
-				<h1>Scratch</h1>
-				<p>A simple note taking app designed by Misha</p>
+				<h1>Work & Rise</h1>
+				<p>Economic Empowerment for the Nation of Uganda</p>
 			</div>
 		);
 	}
@@ -75,7 +75,7 @@ class Home extends Component {
 	renderNotes()  {
 		return (
 			<div className="notes">
-				<PageHeader>Your Notes</PageHeader>
+				<PageHeader>Celes Ltd - Employer Profile</PageHeader>
 				<ListGroup>
 					{ ! this.state.isLoading
 					&& this.renderNotesList(this.state.notes) }
