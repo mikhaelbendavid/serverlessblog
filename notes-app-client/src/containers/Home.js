@@ -39,27 +39,28 @@ class Home extends Component {
 	}
 
 	renderNotesList(notes) {
-		return [{}].concat(notes).map((note, i) => (
-			i !== 0
-			? ( <ListGroupItem
-			key={note.noteId}
-			href={`/notes/${note.noteId}`}
-			onClick={this.handleNoteClick}
-		header={note.content.trim().split('/n')[0]}>
-
-		</ListGroupItem> )
-		: ( <ListGroupItem
-		key="new"
-	href="/notes/new"
-onClick={this.handleNoteClick}>
-	<h4><b>{'/uFF0B'}</b> Create a new note </h4>
-</ListGroupItem> )
-		));
-	}
+  return [{}].concat(notes).map((note, i) => (
+    i !== 0
+      ? ( <ListGroupItem
+            key={note.noteId}
+            href={`/notes/${note.notesid}`}
+            onClick={this.handleNoteClick}
+            header={note.content.trim().split('\n')[0]}>
+              { "Created: " + (new Date(note.createdAt)).toLocaleString() }
+          </ListGroupItem> )
+      : ( <ListGroupItem
+            key="new"
+            href="/notes/new"
+            onClick={this.handleNoteClick}>
+              <h4><b>{'\uFF0B'}</b> Create a new note</h4>
+          </ListGroupItem> )
+  ));
+}
 
 	handleNoteClick = (event) => {
 		event.preventDefault();
 		this.props.history.push(event.currentTarget.getAttribute('href'));
+
 	}
 
 	renderLander() {

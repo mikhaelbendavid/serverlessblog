@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import {
-  FormGroup,
-  FormControl,
-  ControlLabel,
-} from 'react-bootstrap';
+import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import { invokeApig, s3Upload } from '../libs/awsLib';
 import LoaderButton from '../components/LoaderButton';
 import config from '../config.js';
@@ -30,7 +26,9 @@ class Notes extends Component {
       this.setState({
         note: results,
         content: results.content,
+
       });
+
     }
     catch(e) {
       console.log(e);
@@ -40,8 +38,10 @@ class Notes extends Component {
 
   getNote() {
     return invokeApig({ path: `/notes/${this.props.match.params.id}` }, this.props.userToken);
-  //  this.props.history.push(`/notes/${this.props.match.params.id}`);
+
   }
+
+
 
   validateForm() {
     return this.state.content.length > 0;
