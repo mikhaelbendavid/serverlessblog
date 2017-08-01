@@ -52,7 +52,7 @@ class Home extends Component {
             key="new"
             href="/notes/new"
             onClick={this.handleNoteClick}>
-              <h4><b>{'\uFF0B'}</b> Create a New Job</h4>
+              <h4><b>{'\uFF0B'}</b> Create New Job</h4>
           </ListGroupItem> )
   ));
 }
